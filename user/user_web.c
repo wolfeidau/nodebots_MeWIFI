@@ -385,10 +385,11 @@ int web_parseJoinAp(char * cmd)
 	eq = strstr(tmp,"=");
 	char * pass = eq+1;
 	//os_sprintf(dbg,"pass=%s\n",pass);	uart0_sendStr(dbg);
-	len = os_strlen(apname);
+	len = os_strlen(pass);
 	if(len==0 || len>64) return -1;
 	os_memcpy(stationConf.password,pass,len);
-	
+	stationConf.password[len] = '\0';
+    
     ETS_UART_INTR_DISABLE();
     wifi_station_set_config(&stationConf);
     ETS_UART_INTR_ENABLE();
